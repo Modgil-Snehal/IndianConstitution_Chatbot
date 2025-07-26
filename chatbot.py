@@ -16,7 +16,7 @@ import time
 import os
 
 
-class chatbot:
+class Chatbot:
     def __init__(self):
         os.environ["GROQ_API_KEY"] = "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"
         os.environ["TAVILY_API_KEY"] = "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"

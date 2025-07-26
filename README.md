@@ -1,9 +1,11 @@
 # LLM-Project
 the complete version of the Indian Constitution is stored in the indian_constitution.txt file
 
-vector_db.ipynb stored and embeds the txt file in a database named constdb using nomic-embed-text
+vector_db.ipynb stored and embeds the txt file in a database named constdb using googlegenai embeddings
 
-app.ipynb is the main application file that uses the db and mistral:instruct chat model to create a RAG implemented program
+chatbot.py is the main backend that handles all queries from the app
+
+app.py is a streamlit app that works on fronted and takes queries from user
 
 Creating a proper chatbot UI
 
@@ -15,7 +17,7 @@ embedding types
 pinecone
 evaluation
 
-parallel chains
-thinking limit
+parallel chains - done
+thinking limit - done
 
-streamlit app
+streamlit app - done
