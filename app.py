@@ -2,6 +2,8 @@ import streamlit as st
 import uuid
 from chatbot import Chatbot
 import time
+import streamlit.components.v1 as components
+import html
 
 
 st.set_page_config(
@@ -68,21 +70,66 @@ if prompt := st.chat_input("Ask a question about the Indian Constitution..."):
                 response_text = result["output"]
                 timings = result.get("times", {})
 
+                # Live stream response
                 placeholders = st.empty()
                 display_text = ""
-
                 for char in response_text:
                     display_text += char
-                    placeholders.markdown(display_text +"▌")
+                    placeholders.markdown(display_text + "▌")
                     time.sleep(0.03)
-
                 placeholders.markdown(display_text)
+
+                sanitized = html.escape(display_text).replace("`", "\\`")  # prevent JS break
+
+                components.html(
+                    f"""
+                    <div style="display: flex; justify-content: flex-end; margin-top: 10px; margin-bottom: 10px;">
+                        <button id="copy-btn"
+                            style="
+                                background-color: #333;
+                                color: white;
+                                border: 1px solid #666;
+                                border-radius: 6px;
+                                padding: 6px 12px;
+                                cursor: pointer;
+                                font-size: 18px;
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.3);"
+                            title="Copy to clipboard">📋</button>
+                    </div>
+                
+                    <script>
+                        const copyButton = document.getElementById("copy-btn");
+                        copyButton.onclick = () => {{
+                            navigator.clipboard.writeText(`{sanitized}`).then(() => {{
+                                const toast = document.createElement('div');
+                                toast.innerText = "✅ Copied!";
+                                toast.style.position = 'fixed';
+                                toast.style.bottom = '30px';
+                                toast.style.right = '30px';
+                                toast.style.padding = '10px 20px';
+                                toast.style.backgroundColor = '#4CAF50';
+                                toast.style.color = 'white';
+                                toast.style.borderRadius = '5px';
+                                toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                                toast.style.zIndex = 10000;
+                                document.body.appendChild(toast);
+                                setTimeout(() => document.body.removeChild(toast), 2000);
+                            }});
+                        }}
+                    </script>
+                    """,
+                    height=70,
+                )
+                
+
+                # Save message
                 st.session_state.messages.append({"role": "assistant", "content": display_text})
 
-                # Display timings
+                # Show time details
                 with st.expander("⏱ Time Taken Details"):
                     for step, t in timings.items():
                         st.write(f"**{step}**: {t:.4f} seconds")
+
 
             except Exception as e:
                 error_message = f"Sorry, I encountered an error: {e}"
