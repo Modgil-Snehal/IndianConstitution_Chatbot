@@ -78,6 +78,7 @@ class Chatbot:
             tools=tools,
             verbose=True,
             handle_parsing_errors=True,
+            max_iterations=3,
             max_execution_time=20,
         )
 
@@ -120,4 +121,3 @@ class Chatbot:
             "output": answer if answer else "I'm sorry, I couldn't generate a final answer.",
             "times": self.tool_times,
         }
-

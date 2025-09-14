@@ -76,7 +76,7 @@ if prompt := st.chat_input("Ask a question about the Indian Constitution..."):
                 for char in response_text:
                     display_text += char
                     placeholders.markdown(display_text + "▌")
-                    time.sleep(0.03)
+                    time.sleep(0.01)
                 placeholders.markdown(display_text)
 
                 sanitized = html.escape(display_text).replace("`", "\\`")  # prevent JS break
