@@ -1,6 +1,6 @@
 import streamlit as st
 import uuid
-from chatbot import Chatbot
+from chatbot_local import Chatbot
 import time
 import streamlit.components.v1 as components
 import html
