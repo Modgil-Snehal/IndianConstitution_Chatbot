@@ -1,5 +1,5 @@
 from langchain_community.vectorstores.pgvector import PGVector
-from langchain.embeddings import OllamaEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain_groq import ChatGroq
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -23,8 +23,8 @@ class StreamHandler(BaseCallbackHandler):
 
 class Chatbot:
     def __init__(self):
-        GROQ_API_KEY = os.environ.get("GROQ_API")
-        TAVILY_API_KEY = os.environ.get("TAVILY_API")
+        GROQ_API = os.environ.get("GROQ_API")
+        TAVILY_API = os.environ.get("TAVILY_API")
 
         CONNECTION_STRING = os.environ.get("DATABASE_URL")
         self.embeddings = OllamaEmbeddings(model="nomic-embed-text")
